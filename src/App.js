@@ -26,9 +26,10 @@ function App() {
     'Western Wear', 'Gym Pants','250 Tops','350 Tops','Jeans Tops',
   ];
 
+  // 📥 ಪ್ರಾಡಕ್ಟ್ಸ್ ಲೋಡ್ ಮಾಡೋ ಫಂಕ್ಷನ್
   const fetchProducts = () => {
     setLoading(true);
-    fetch('https://dolphin-trends.onrender.com/products')
+    fetch('https://dolphin-trends-3.onrender.com/products') // ✅ FIX: ಹೊಸ Render URL ಗೆ ಅಪ್ಡೇಟ್ ಮಾಡಲಾಗಿದೆ
       .then(r => r.json())
       .then(d => { setProducts(d); setLoading(false); })
       .catch(() => setLoading(false));
@@ -50,10 +51,11 @@ function App() {
     }
   };
 
+  // 🗑️ ಪ್ರಾಡಕ್ಟ್ ಡಿಲೀಟ್ ಮಾಡೋದು
   const handleDelete = (e, id) => {
     e.stopPropagation();
     if (!window.confirm('ಈ product delete ಮಾಡಬೇಕಾ?')) return;
-    fetch('https://dolphin-trends.onrender.com/products/' + id, { method: 'DELETE' })
+    fetch('https://dolphin-trends-3.onrender.com/products/' + id, { method: 'DELETE' }) // ✅ ಹೊಸ URL
       .then(r => { if (r.ok) setProducts(p => p.filter(x => x.id !== id)); });
   };
 
@@ -70,10 +72,11 @@ function App() {
     });
   };
 
+  // 💾 ಎಡಿಟ್ ಸೇವ್ ಮಾಡೋದು
   const handleEditSave = () => {
     if (!editProduct) return;
     setEditLoading(true);
-    fetch('https://dolphin-trends.onrender.com/products/' + editProduct.id, {
+    fetch('https://dolphin-trends-3.onrender.com/products/' + editProduct.id, { // ✅ ಹೊಸ URL
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...editProduct, ...editForm }),
@@ -127,7 +130,7 @@ function App() {
       {/* Main Content */}
       {showAdmin ? (
         isAdminLoggedIn
-          ? <Admin onProductAdded={fetchProducts} />
+          ? <Admin onProductAdded={fetchProducts} /> // ✅ ಇಕೋಡ್ ಈಗ Admin.js ಬುಕಿಂಗ್ಸ್ ಜೊತೆ ಕ್ಲೀನ್ ಆಗಿ ರನ್ ಆಗುತ್ತೆ
           : <Login onLogin={() => setIsAdminLoggedIn(true)} />
       ) : (
         <>
@@ -306,7 +309,7 @@ function App() {
       <footer>
         <p><strong>🐬 Dolphin Trends</strong> | Women's Fashion Store | Bangalore</p>
         <p>📍 Laggere Main Road, Bangalore — 560058</p>
-        <p>📱 +91 7795800741 | 📸 Developer by Jeevan JD</p>
+        <p>📱 +91 7795800741 | 📸 Developed by Jeevan JD</p>
       </footer>
 
       {/* Product Page */}
@@ -388,7 +391,7 @@ const editBtnStyle = { background:'#1a6cff', color:'#fff', border:'none', border
 const deleteBtnStyle = { background:'#ff3b5c', color:'#fff', border:'none', borderRadius:'7px', padding:'5px 10px', fontWeight:'700', fontSize:'0.75rem', cursor:'pointer' };
 const overlayStyle = { position:'fixed', inset:0, background:'rgba(0,0,0,0.75)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:2000 };
 const modalStyle = { background:'#0f0f1e', border:'1px solid rgba(26,108,255,0.3)', borderRadius:'18px', padding:'30px', width:'90%', maxWidth:'420px', color:'#f0f4ff' };
-const labelStyle = { fontSize:'0.78rem', color:'#7a85a0', display:'block', marginBottom:'4px' };
+const labelStyle = { fontSize:'0.78rem', color:'#7a85a0', display:'block', Comprehensive:'block', marginBottom:'4px' };
 const inputStyle = { width:'100%', padding:'10px 13px', marginBottom:'13px', borderRadius:'9px', border:'1px solid rgba(26,108,255,0.25)', background:'#0b0b18', color:'#f0f4ff', boxSizing:'border-box' };
 
 export default App;
